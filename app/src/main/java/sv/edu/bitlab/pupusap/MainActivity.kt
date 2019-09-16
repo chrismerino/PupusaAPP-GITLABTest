@@ -84,7 +84,6 @@ class MainActivity : AppCompatActivity() {
 
         displayCounters()
         setActionBar(null)
-        Log.d("ACTIVITY", "MainActivity onCreate()")
     }
 
     fun displayCounters() {
@@ -109,8 +108,6 @@ class MainActivity : AppCompatActivity() {
         val resource = pupusaStringResources[relleno]
         val text = this.resources.getString(resource!!, contador)
         botonesMaiz[relleno]!!.text = text
-        var s = "hola"
-        s = "$s mundo"
     }
     fun addArroz(relleno: String) {
         contadoresArroz[relleno] = contadoresArroz[relleno]!! + 1

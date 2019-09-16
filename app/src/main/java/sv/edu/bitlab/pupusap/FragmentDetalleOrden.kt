@@ -1,17 +1,20 @@
 package sv.edu.bitlab.pupusap
 
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-import java.text.DecimalFormat
 
-class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentListener {
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import java.text.DecimalFormat
+import sv.edu.bitlab.pupusap.DetalleOrdeActivity.*
+
+class FragmentDetalleOrden : Fragment() {
+
   var arroz = arrayListOf<Int>()
   var maiz = arrayListOf<Int>()
+
   val lineItemsIDs = arrayOf(
     arrayOf(R.id.lineItemDetail1, R.id.lineItemPrice1),
     arrayOf(R.id.lineItemDetail2, R.id.lineItemPrice2),
@@ -21,15 +24,16 @@ class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentLi
     arrayOf(R.id.lineItemDetail6, R.id.lineItemPrice6)
   )
 
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_detalle_orde)
-    val params = this.intent.extras
+    val params = activity!!.intent.extras
     arroz = params!!.getIntegerArrayList(CONTADOR_ARROZ)!!
-    maiz = params.getIntegerArrayList(CONTADOR_MAIZ)!!
+    maiz = params!!.getIntegerArrayList(CONTADOR_MAIZ)!!
     displayDetalle()
-    addFragment()
+
+    return inflater.inflate(R.layout.fragment_detalle_orden, container, false)
+
   }
 
   fun displayDetalle() {
@@ -37,10 +41,10 @@ class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentLi
     var total = 0.0f
     for((index, contador) in arr.withIndex()){
       val ids = lineItemsIDs[index]
-      val detailTexview = findViewById<TextView>(ids[0])
-      val priceTextView= findViewById<TextView>(ids[1])
+      val detailTexview = activity!!.findViewById<TextView>(ids[0])
+      val priceTextView= activity!!.findViewById<TextView>(ids[1])
       if(contador > 0){
-        val totalUnidad = contador * VALOR_PUPUSA
+        val totalUnidad = contador * DetalleOrdeActivity.VALOR_PUPUSA
         val descripcion = getDescripcion(index)
         detailTexview.text = getString(R.string.pupusa_line_item_description,
           contador, descripcion)
@@ -52,37 +56,22 @@ class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentLi
         priceTextView.visibility = View.GONE
       }
     }
-    val totalPrecio = findViewById<TextView>(R.id.lineItemPriceTotal)
+    val totalPrecio = activity!!.findViewById<TextView>(R.id.lineItemPriceTotal)
     val precio = DecimalFormat("$#0.00").format(total)
     totalPrecio.text = precio
   }
 
-  fun addFragment() {
-    val fragment = FragmentDetalleOrden()
-    val builder = supportFragmentManager
-      .beginTransaction()
-      .add(R.id.pruebaFragmentContainer, fragment, FRAGMENT_TAG)
-    builder.commit()
-  }
-
   fun getDescripcion(index: Int): String {
     return when(index){
-      QUESO -> "Queso de arroz"
-      FRIJOLES -> "Frijol con queso de arroz"
-      REVUELTAS -> "Revueltas de arroz"
-      QUESO_MAIZ-> "Queso de maiz"
-      FRIJOLES_MAIZ -> "Frijol con queso de maiz"
-      REVUELTAS_MAIZ -> "Revueltas de maiz"
+      DetalleOrdeActivity.QUESO -> "Queso de arroz"
+      DetalleOrdeActivity.FRIJOLES -> "Frijol con queso de arroz"
+      DetalleOrdeActivity.REVUELTAS -> "Revueltas de arroz"
+      DetalleOrdeActivity.QUESO_MAIZ -> "Queso de maiz"
+      DetalleOrdeActivity.FRIJOLES_MAIZ -> "Frijol con queso de maiz"
+      DetalleOrdeActivity.REVUELTAS_MAIZ -> "Revueltas de maiz"
       else -> throw RuntimeException("Pupusa no soportada")
     }
   }
-
-
-  //region DetalleOrdeActivity
-  override fun onFragmentInteraction(uri: Uri) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-  //endregion
 
   companion object{
     const val QUESO = 0//3
@@ -96,4 +85,6 @@ class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentLi
     const val VALOR_PUPUSA = 0.5F
     const val FRAGMENT_TAG = "FRAGMENT_TAG"
   }
+
+
 }
