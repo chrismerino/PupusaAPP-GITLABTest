@@ -3,13 +3,11 @@ package sv.edu.bitlab.pupusap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import java.text.DecimalFormat
 
-class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentListener {
+class DetalleOrdeActivity : AppCompatActivity(), FragmentDetalleOrden.DetalleOrdenFragmentListener {
   var arroz = arrayListOf<Int>()
   var maiz = arrayListOf<Int>()
   val lineItemsIDs = arrayOf(
@@ -24,12 +22,12 @@ class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentLi
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_detalle_orde)
+    setContentView(R.layout.fragment_detalle_orden)
     val params = this.intent.extras
     arroz = params!!.getIntegerArrayList(CONTADOR_ARROZ)!!
     maiz = params.getIntegerArrayList(CONTADOR_MAIZ)!!
     displayDetalle()
-    addFragment()
+//    addFragment()
   }
 
   fun displayDetalle() {
@@ -57,13 +55,13 @@ class DetalleOrdeActivity : AppCompatActivity(), PruebaFragment.PruebaFragmentLi
     totalPrecio.text = precio
   }
 
-  fun addFragment() {
-    val fragment = FragmentDetalleOrden()
-    val builder = supportFragmentManager
-      .beginTransaction()
-      .add(R.id.pruebaFragmentContainer, fragment, FRAGMENT_TAG)
-    builder.commit()
-  }
+//  fun addFragment() {
+//    val fragment = FragmentDetalleOrden()
+//    val builder = supportFragmentManager
+//      .beginTransaction()
+//      .add(R.id.pruebaFragmentContainer, fragment, FRAGMENT_TAG)
+//    builder.commit()
+//  }
 
   fun getDescripcion(index: Int): String {
     return when(index){

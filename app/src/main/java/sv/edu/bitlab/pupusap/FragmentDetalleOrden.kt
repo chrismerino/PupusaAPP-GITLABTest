@@ -1,12 +1,14 @@
 package sv.edu.bitlab.pupusap
 
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.ActionBarContainer
 import java.text.DecimalFormat
 import sv.edu.bitlab.pupusap.DetalleOrdeActivity.*
 
@@ -72,6 +74,18 @@ class FragmentDetalleOrden : Fragment() {
       else -> throw RuntimeException("Pupusa no soportada")
     }
   }
+
+  interface DetalleOrdenFragmentListener {
+    // TODO: Update argument type and name
+    fun onFragmentInteraction(uri: Uri)
+  }
+
+//  @JvmStatic
+//  fun newInstance(orderList: ArrayList<Orden>) = FragmentDetalleOrden().apply {
+//    arguments = Bundle().apply {
+//      putParcelableArrayList()
+//    }
+//  }
 
   companion object{
     const val QUESO = 0//3

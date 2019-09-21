@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentDetalleOrden">
+
+
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -160,6 +165,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lineItemPrice5"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -218,3 +225,5 @@
 
 
 </FrameLayout>
+
+</ScrollView>
