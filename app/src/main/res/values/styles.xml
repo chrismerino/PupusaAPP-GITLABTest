@@ -15,11 +15,13 @@
   </style>
 
   <style name="AppTheme.botonPupusaIzquierdo" parent="AppTheme.botonPupusa">
+    <item name="android:background">@drawable/round_button</item>
     <item name="android:layout_alignParentStart">true</item>
     <item name="android:layout_marginStart">@dimen/button_margin</item>
   </style>
 
   <style name="AppTheme.botonPupusaDerecho" parent="AppTheme.botonPupusa">
+    <item name="android:background">@drawable/round_button</item>
     <item name="android:layout_alignParentEnd">true</item>
     <item name="android:layout_marginEnd">@dimen/button_margin</item>
   </style>

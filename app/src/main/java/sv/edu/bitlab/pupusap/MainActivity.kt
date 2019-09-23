@@ -4,13 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.util.Log
-import android.view.View
 import android.widget.Button
+import android.widget.FrameLayout
 import sv.edu.bitlab.pupusap.DetalleOrdeActivity.Companion.CONTADOR_ARROZ
 import sv.edu.bitlab.pupusap.DetalleOrdeActivity.Companion.CONTADOR_MAIZ
 
+
 class MainActivity : AppCompatActivity() {
+
+
+    private var fragmentContainer: FrameLayout? = null
+    var botonEnviar: Button? = null
+
+
+
     var contadoresMaiz = hashMapOf(
         QUESO to 0,
         FRIJOLES to 0,
@@ -38,13 +45,30 @@ class MainActivity : AppCompatActivity() {
     var quesoDerecha: Button? = null
     var frijolDerecha: Button? = null
     var revueltasDerecha: Button? = null
-    var loadingContainer: View? = null
 
-    var sendButton: Button? = null
+
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        fragmentContainer = findViewById(R.id.contenedor_fragment)
+
+        botonEnviar = findViewById(R.id.botonEnviar)
+        botonEnviar!!.setOnClickListener {
+
+            openFragment()
+
+            // confirmarOrden()
+
+        }
+
+
         quesoIzquierda = findViewById(R.id.quesoIzquierda)
         frijolIzquierda = findViewById(R.id.frijolIzquierdaMaiz)
         revueltaIzquierda = findViewById(R.id.revueltasIzquierda)
@@ -74,17 +98,35 @@ class MainActivity : AppCompatActivity() {
         frijolDerecha!!.setOnClickListener { addArroz(FRIJOLES) }
         revueltasDerecha!!.setOnClickListener { addArroz(REVUELTAS) }
 
-        sendButton = findViewById(R.id.sendButton)
-        sendButton!!.setOnClickListener {
-            confirmarOrden()
-        }
 
-        loadingContainer = findViewById(R.id.loadingContainer)
-        loadingContainer!!.setOnClickListener { showLoading(false) }
+
+
+
 
         displayCounters()
-        setActionBar(null)
     }
+
+
+
+
+    fun openFragment(){
+
+        val fragmento = BlankFragment()
+        val builder = supportFragmentManager
+            .beginTransaction()
+            .add(R.id.contenedorFragment, fragmento)
+        builder.commit()
+
+//    val fragment = OrdenFragment.newInstance("Hey", "Stranger")
+//    val builder = supportFragmentManager.beginTransaction().add(R.id.contenedorFragment, fragment)
+//    builder.commit()
+  }
+
+
+
+
+
+
 
     fun displayCounters() {
         for ((key,value) in contadoresMaiz){
@@ -135,10 +177,6 @@ class MainActivity : AppCompatActivity() {
         this.startActivity(intent)
     }
 
-    fun showLoading(show: Boolean) {
-        val visibility = if(show) View.VISIBLE else View.GONE
-        loadingContainer!!.visibility = visibility
-    }
 
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
